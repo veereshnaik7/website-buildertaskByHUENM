@@ -1,13 +1,141 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  font-family: "DM Sans", sans-serif !important;
+  background-color: #050505;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.home {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.home h1 {
+  color: #f8d00d;
+  font-size: 6rem;
+}
+.home h2 {
+  margin-top: 1rem;
+}
+.home p {
+  max-width: 60%;
+  text-align: center;
+  margin-top: 1rem;
+}
+.home button {
+  all: unset;
+  color: #050505;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 2px solid;
+  border-color: #f8d00d;
+  font-weight: 600;
+  transition: ease 0.5s;
+  cursor: pointer;
+}
+.home button:hover {
+  scale: 1.05;
+
+  color: #fff;
+}
+.editorsec {
+  width: 100%;
+}
+.editorsec .top {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #797575;
+}
+.top button {
+  all: unset;
+  padding: 0.5rem;
+  margin-left: 1rem;
+  text-transform: capitalize;
+  background-color: #050505;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.previewicon {
+  color: #fff;
+  font-size: 2rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+.tools-view {
+  display: flex;
+}
+
+.left {
+  background-color: #fff;
+  color: #050505;
+  width: 15%;
+  height: calc(100vh - 60px);
+}
+
+.left h3 {
+  text-transform: capitalize;
+  max-width: 90%;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.left li {
+  text-transform: capitalize;
+  max-width: 90%;
+  list-style-type: none;
+  padding: 0.5rem;
+  border: 1px solid;
+  margin: 0.2rem auto;
+  cursor: grab;
+}
+.pages {
+  border: 0px solid !important;
+  cursor: pointer !important;
+}
+.right {
+  background-color: #1470af;
+  min-height: calc(100vh - 60px);
+  width: calc(100% - 15%);
+}
+@media only screen and (max-width: 768px) {
+  .home h1 {
+    color: #f8d00d;
+    font-size: 2rem;
+  }
+  .home p {
+    max-width: 80%;
+  }
 }
