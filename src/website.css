@@ -1,0 +1,23 @@
+.websiteoverview-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item {
+  max-width: 90%;
+  margin: 0 auto;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+  transition: 0.5s ease;
+  font-size: 40px;
+  position: relative;
+}
+
+
+.item:active {
+  z-index: 123567890;
+}

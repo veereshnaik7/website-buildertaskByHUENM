@@ -96,13 +96,14 @@ code {
 }
 .tools-view {
   display: flex;
+  align-items: stretch;
 }
 
 .left {
   background-color: #fff;
   color: #050505;
   width: 15%;
-  height: calc(100vh - 60px);
+  /* height: calc(100vh - 60px); */
 }
 
 .left h3 {
@@ -129,6 +130,7 @@ code {
   background-color: #1470af;
   min-height: calc(100vh - 60px);
   width: calc(100% - 15%);
+  touch-action: none;
 }
 @media only screen and (max-width: 768px) {
   .home h1 {
@@ -138,4 +140,29 @@ code {
   .home p {
     max-width: 80%;
   }
+}
+
+
+
+
+.website-section {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip button {
+  margin: 5px;
 }
