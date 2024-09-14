@@ -1,37 +1,41 @@
-// features/sections/sectionsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
+
+const initialState = JSON.parse(localStorage.getItem('sections')) || [
+  { id: "1", type: "header", content: "Header" },
+  { id: "2", type: "home", content: "Home" },
+  { id: "3", type: "contact", content: "Contact" },
+  { id: "4", type: "services", content: "Services" },
+  { id: "5", type: "about", content: "About" },
+  { id: "6", type: "footer", content: "Footer" },
+];
 
 const sectionsSlice = createSlice({
   name: 'sections',
-  initialState: {
-    sections: [
-      { id: '1', type: 'header', content: 'Header' },
-      { id: '2', type: 'home', content: 'Home' },
-      { id: '3', type: 'contact', content: 'Contact' },
-      { id: '4', type: 'services', content: 'Services' },
-      { id: '5', type: 'about', content: 'About' },
-      { id: '6', type: 'footer', content: 'Footer' },
-    ],
-    clickedSectionId: null,
-  },
+  initialState,
   reducers: {
     addSection: (state, action) => {
-      state.sections.push({ id: uuidv4(), ...action.payload });
+      state.push(action.payload);
+      localStorage.setItem('sections', JSON.stringify(state));
     },
     removeSection: (state, action) => {
-      state.sections = state.sections.filter(section => section.id !== action.payload);
+      const updatedSections = state.filter(section => section.id !== action.payload);
+      localStorage.setItem('sections', JSON.stringify(updatedSections));
+      return updatedSections;
     },
-    reorderSections: (state, action) => {
-      const { oldIndex, newIndex } = action.payload;
-      const [removed] = state.sections.splice(oldIndex, 1);
-      state.sections.splice(newIndex, 0, removed);
+    updateSection: (state, action) => {
+      const { id, content } = action.payload;
+      const section = state.find(section => section.id === id);
+      if (section) {
+        section.content = content;
+        localStorage.setItem('sections', JSON.stringify(state));
+      }
     },
-    setClickedSectionId: (state, action) => {
-      state.clickedSectionId = action.payload;
-    },
+    setSections: (state, action) => {
+      localStorage.setItem('sections', JSON.stringify(action.payload));
+      return action.payload;
+    }
   },
 });
 
-export const { addSection, removeSection, reorderSections, setClickedSectionId } = sectionsSlice.actions;
+export const { addSection, removeSection, updateSection, setSections } = sectionsSlice.actions;
 export default sectionsSlice.reducer;

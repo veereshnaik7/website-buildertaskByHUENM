@@ -59,25 +59,35 @@ const WebsiteEditor = () => {
     })
   );
 
-  const handleEditClick = () => {
+  const handleEdit = () => {
     setIsEditMode(true);
     setIsLeftSectionVisible(true);
   };
 
-  const handleSaveClick = () => {
+  const handleSave = () => {
     setIsEditMode(false);
     setIsLeftSectionVisible(false);
   };
 
-  const style = {
-    touchAction: isEditMode ? 'none' : 'auto'
+  const handleReset = () => {
+    setSections([
+      { id: "1", type: "header", content: "Header" },
+      { id: "2", type: "home", content: "Home" },
+      { id: "3", type: "contact", content: "Contact" },
+      { id: "4", type: "services", content: "Services" },
+      { id: "5", type: "about", content: "About" },
+      { id: "6", type: "footer", content: "Footer" },
+    ]);
+    
   };
+
   return (
     <div className="editorsec">
       <div className="top">
         <div>
-          <button onClick={handleEditClick}>Edit</button>
-          <button onClick={handleSaveClick}>Save</button>
+          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleReset}>reset</button>
         </div>
         <div>
           <FaDesktop
@@ -135,7 +145,7 @@ const WebsiteEditor = () => {
             maxWidth: isMobileView ? "600px" : "100%",
             transition: "width 0.3s ease",
             margin: "0 auto",
-            touchAction: isEditMode ? 'none' : 'auto'
+            touchAction: isEditMode ? "none" : "auto",
           }}
         >
           {isEditMode ? (

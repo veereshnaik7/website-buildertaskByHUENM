@@ -3,17 +3,6 @@ import "./website.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-import {
-  closestCorners,
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import { BsCursor } from "react-icons/bs";
-
 const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
   const [editableContent, setEditableContent] = useState(content);
 
@@ -85,18 +74,16 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
     maxWidth: "90%",
     margin: "0 auto",
     border: isDragging ? "3px solid black" : "0px solid black",
-    position: "relative",  
-    zIndex: isDragging ? 1000 : 1, 
-    cursor: isDragging ? "grab" : "normal" 
+    position: "relative",
+    zIndex: isDragging ? 1000 : 1,
+    cursor: isDragging ? "grab" : "normal",
   };
 
   return (
     <div {...attributes} {...listeners} ref={setNodeRef} style={style}>
-      <DndContext collisionDetection={closestCorners}>
-        <div className="item" onClick={handleClick}>
-          {editableContent}
-        </div>
-      </DndContext>
+      <div className="item" onClick={handleClick}>
+        {editableContent}
+      </div>
     </div>
   );
 };
