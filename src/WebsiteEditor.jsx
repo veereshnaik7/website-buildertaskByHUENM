@@ -69,6 +69,9 @@ const WebsiteEditor = () => {
     setIsLeftSectionVisible(false);
   };
 
+  const style = {
+    touchAction: isEditMode ? 'none' : 'auto'
+  };
   return (
     <div className="editorsec">
       <div className="top">
@@ -132,6 +135,7 @@ const WebsiteEditor = () => {
             maxWidth: isMobileView ? "600px" : "100%",
             transition: "width 0.3s ease",
             margin: "0 auto",
+            touchAction: isEditMode ? 'none' : 'auto'
           }}
         >
           {isEditMode ? (
