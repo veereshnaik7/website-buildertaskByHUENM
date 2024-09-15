@@ -6,7 +6,7 @@ This is a simple website builder application created using React.js. The app all
 -> Technologies Used
 -> Installation
 -> Usage
--> File Structure
+
 ##  Features
 1. Add new components (e.g., Header, Home, Contact, Services, About, Footer)
 2. Edit content of the sections
