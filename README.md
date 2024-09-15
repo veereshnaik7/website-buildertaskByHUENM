@@ -24,7 +24,7 @@ This is a simple website builder application created using React.js. The app all
 5. uuid: Used to generate unique IDs for new sections.
 
 ## Installation
-1. git clone ""
+1. git clone "https://github.com/veereshnaik7/website-buildertaskByHUENM.git"
 2. cd website-builder
 3. npm install
 4. npm start
