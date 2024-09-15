@@ -39,6 +39,6 @@ This is a simple website builder application created using React.js. The app all
    -> Save your changes to LocalStorage or reset the sections.
 
 ## Thank You
-This project was developed as part of a task assigned to me by Hunem during the hiring process. I completed this project by exploring various tools and techniques, putting in my best effort to deliver a functional and creative solution. It was a great opportunity to learn and showcase my abilities.
+I developed this project as part of a task from Hunem during the hiring process. I explored various tools and techniques and put in a lot of effort to create a functional and creative solution. It was a fantastic learning experience, and I’m excited to share what I’ve built.
 
-Thank you for considering my work, and I hope it meets your expectations!
+Thank you for taking the time to review my work. I hope it aligns with what you were looking for!
