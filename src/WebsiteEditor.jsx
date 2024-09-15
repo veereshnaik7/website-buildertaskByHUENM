@@ -14,15 +14,47 @@ import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { v4 as uuidv4 } from "uuid";
 
 const WebsiteEditor = () => {
-  const [sections, setSections] = useState([
-    { id: "1", type: "header", content: "Header" },
-    { id: "2", type: "home", content: "Home" },
-    { id: "3", type: "contact", content: "Contact" },
-    { id: "4", type: "services", content: "Services" },
-    { id: "5", type: "about", content: "About" },
-    { id: "6", type: "footer", content: "Footer" },
-  ]);
+  const initialSections = JSON.parse(localStorage.getItem("sections")) || [
+    {
+      id: "1",
+      type: "header",
+      content: ["Website Title", "Home", "Services", "About", "Contact"], // Title on the left, navigation links on the right
+    },
+    {
+      id: "2",
+      type: "home",
+      content: ["please enter your information", "path/to/image.jpg"], // Name and an image path for the home section
+    },
+    {
+      id: "3",
+      type: "contact",
+      content:
+        "You can contact us at: contact@website.com or call us at (123) 456-7890", // Contact details
+    },
+    {
+      id: "4",
+      type: "services",
+      content: [
+        "Web Development",
+        "SEO",
+        "Digital Marketing",
+        "Graphic Design",
+      ], 
+    },
+    {
+      id: "5",
+      type: "about",
+      content:
+        "We are a team of professionals dedicated to delivering high-quality digital solutions to help businesses grow.", // About the company or individual
+    },
+    {
+      id: "6",
+      type: "footer",
+      content: "© 2024 Your Company Name. All rights reserved.", 
+    },
+  ];
 
+  const [sections, setSections] = useState(initialSections);
   const [newComponent, setNewComponent] = useState("header");
   const [isEditMode, setIsEditMode] = useState(true);
   const [isLeftSectionVisible, setIsLeftSectionVisible] = useState(true);
@@ -67,18 +99,21 @@ const WebsiteEditor = () => {
   const handleSave = () => {
     setIsEditMode(false);
     setIsLeftSectionVisible(false);
+    localStorage.setItem("sections", JSON.stringify(sections));
   };
 
   const handleReset = () => {
-    setSections([
-      { id: "1", type: "header", content: "Header" },
-      { id: "2", type: "home", content: "Home" },
-      { id: "3", type: "contact", content: "Contact" },
-      { id: "4", type: "services", content: "Services" },
-      { id: "5", type: "about", content: "About" },
-      { id: "6", type: "footer", content: "Footer" },
-    ]);
-    
+    localStorage.removeItem("sections");
+    setSections(initialSections);
+    window.location.reload();
+  };
+
+  const handleContentChange = (id, newContent) => {
+    setSections((sections) =>
+      sections.map((section) =>
+        section.id === id ? { ...section, content: newContent } : section
+      )
+    );
   };
 
   return (
@@ -154,10 +189,18 @@ const WebsiteEditor = () => {
               collisionDetection={closestCorners}
               onDragEnd={handledragend}
             >
-              <WebsiteOverview items={sections} isEditMode={isEditMode} />
+              <WebsiteOverview
+                items={sections}
+                isEditMode={isEditMode}
+                onContentChange={handleContentChange}
+              />
             </DndContext>
           ) : (
-            <WebsiteOverview items={sections} isEditMode={isEditMode} />
+            <WebsiteOverview
+              items={sections}
+              isEditMode={isEditMode}
+              onContentChange={handleContentChange}
+            />
           )}
         </div>
       </div>

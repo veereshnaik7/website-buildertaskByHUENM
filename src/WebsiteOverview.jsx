@@ -5,7 +5,7 @@ import {
 } from "@dnd-kit/sortable";
 import WebsiteSection from "./WebsiteSection";
 
-const WebsiteOverview = ({ items, isEditMode }) => {
+const WebsiteOverview = ({ items, isEditMode, onContentChange }) => {
   return (
     <div>
       <SortableContext strategy={verticalListSortingStrategy} items={items}>
@@ -16,6 +16,7 @@ const WebsiteOverview = ({ items, isEditMode }) => {
             key={item.id}
             content={item.content}
             isEditMode={isEditMode}
+            onContentChange={onContentChange}
           />
         ))}
       </SortableContext>

@@ -54,7 +54,7 @@ code {
   align-items: center;
   gap: 10px;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 2px solid;
   border-color: #f8d00d;
   font-weight: 600;
@@ -63,7 +63,7 @@ code {
 }
 .home button:hover {
   scale: 1.05;
-
+background-color: #050505;
   color: #fff;
 }
 .editorsec {
@@ -140,9 +140,6 @@ code {
     max-width: 80%;
   }
 }
-
-
-
 
 .website-section {
   border: 1px solid #ccc;

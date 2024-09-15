@@ -53,7 +53,7 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
     }
   };
 
-  const handleClick = () => {
+  const handleClickedit = () => {
     if (isEditMode === true) {
       const newContent = prompt("modify contnet", editableContent);
       if (newContent !== null) {
@@ -81,7 +81,7 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
 
   return (
     <div {...attributes} {...listeners} ref={setNodeRef} style={style}>
-      <div className="item" onClick={handleClick}>
+      <div className="item" onClick={handleClickedit}>
         {editableContent}
       </div>
     </div>
