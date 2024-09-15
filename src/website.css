@@ -9,17 +9,44 @@
 .item {
   max-width: 90%;
   margin: 0 auto;
-  margin: 1rem auto;
   display: flex;
   justify-content: center;
   transition: 0.5s ease;
-  font-size: 40px;
   position: relative;
   cursor: pointer;
 }
 
 .item:active {
   z-index: 123567890;
+}
+
+.left h3 {
+  text-align: center;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.left select {
+
+  height: 30px;
+  width: 98%;
+  margin: 0 auto;
+  border-radius: 5px;
+  transition: 0.5s ease;
+  outline: none;
+}
+
+.left select:hover{
+  border: 2px solid black;
+
+}
+.left button {
+  width: 60%;
+
+  margin: 0 auto;
+  margin-top: 1rem;
 }
 
 @media screen and (max-width: 768px) {

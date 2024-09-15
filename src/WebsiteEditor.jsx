@@ -18,39 +18,32 @@ const WebsiteEditor = () => {
     {
       id: "1",
       type: "header",
-      content: ["Website Title", "Home", "Services", "About", "Contact"], // Title on the left, navigation links on the right
+      content: "Header",
     },
     {
       id: "2",
       type: "home",
-      content: ["please enter your information", "path/to/image.jpg"], // Name and an image path for the home section
+      content: "Home",
     },
     {
       id: "3",
       type: "contact",
-      content:
-        "You can contact us at: contact@website.com or call us at (123) 456-7890", // Contact details
+      content: "Contact",
     },
     {
       id: "4",
       type: "services",
-      content: [
-        "Web Development",
-        "SEO",
-        "Digital Marketing",
-        "Graphic Design",
-      ], 
+      content: "Services",
     },
     {
       id: "5",
       type: "about",
-      content:
-        "We are a team of professionals dedicated to delivering high-quality digital solutions to help businesses grow.", // About the company or individual
+      content: "About",
     },
     {
       id: "6",
       type: "footer",
-      content: "© 2024 Your Company Name. All rights reserved.", 
+      content: "Footer",
     },
   ];
 
@@ -139,26 +132,7 @@ const WebsiteEditor = () => {
       <div className="tools-view">
         {isLeftSectionVisible && (
           <div className="left">
-            <h3>Components</h3>
-            <ul>
-              <li>TextBox</li>
-              <li>Image</li>
-              <li>Button</li>
-              <li>Carousel</li>
-              <li>Products Section</li>
-            </ul>
-
-            <h3>Pages</h3>
-            <ul>
-              <li className="pages">Header</li>
-              <li className="pages">Home</li>
-              <li className="pages">Contact</li>
-              <li className="pages">Services</li>
-              <li className="pages">About</li>
-              <li className="pages">Footer</li>
-            </ul>
-
-            <h3>Add Component</h3>
+            <h3>Add sections</h3>
             <select
               value={newComponent}
               onChange={(e) => setNewComponent(e.target.value)}
@@ -170,7 +144,7 @@ const WebsiteEditor = () => {
               <option value="about">About</option>
               <option value="footer">Footer</option>
             </select>
-            <button onClick={handleAddComponent}>Add Component</button>
+            <button onClick={handleAddComponent}>Add</button>
           </div>
         )}
         <div

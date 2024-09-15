@@ -77,8 +77,12 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
     position: "relative",
     zIndex: isDragging ? 1000 : 1,
     cursor: isDragging ? "grab" : "normal",
+    marginTop: isEditMode ? "1rem" : "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   };
-
+  
   return (
     <div {...attributes} {...listeners} ref={setNodeRef} style={style}>
       <div className="item" onClick={handleClickedit}>
