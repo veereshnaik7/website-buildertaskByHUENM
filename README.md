@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+## Website Builder App
+This is a simple website builder application created using React.js. The app allows users to create customizable web pages by adding, editing, and rearranging sections. It uses drag-and-drop functionality to reorder components and supports mobile and desktop views.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+-> Features
+-> Technologies Used
+-> Installation
+-> Usage
 
-## Available Scripts
+##  Features
+1. Add new components (e.g., Header, Home, Contact, Services, About, Footer)
+2. Edit content of the sections
+3 .Drag-and-drop sections to reorder them using @dnd-kit/core
+4. Save and reset functionality to persist or clear changes
+5. Switch between mobile and desktop previews
+6. LocalStorage support to save sections data
+7. Preview mode to see the live structure of the website
 
-In the project directory, you can run:
+## Technologies Used
+1. React.js: A JavaScript library for building user interfaces.
+2. React Icons: Used for icons like arrows, desktop, and mobile icons.
+3. @dnd-kit/core: For drag-and-drop functionality.
+4. @dnd-kit/sortable: For reordering items using drag-and-drop.
+5. uuid: Used to generate unique IDs for new sections.
 
-### `npm start`
+## Installation
+1. git clone "https://github.com/veereshnaik7/website-buildertaskByHUENM.git"
+2. cd website-builder
+3. npm install
+4. npm start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Usage
+1. Home Page: When you start the app, you will see the home page. Click on "Get Started" to go to the editor.
+2. Website Editor :
+   -> Add new components using the dropdown on the left.
+   -> Drag and drop sections to reorder them.
+   -> Edit section content by clicking on the section while in edit mode.
+   -> Toggle between edit and preview modes using the buttons at the top.
+   -> Save your changes to LocalStorage or reset the sections.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Thank You
+I developed this project as part of a task from Hunem during the hiring process. I explored various tools and techniques and put in a lot of effort to create a functional and creative solution. It was a fantastic learning experience, and I’m excited to share what I’ve built.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you for taking the time to review my work. I hope it aligns with what you were looking for!
