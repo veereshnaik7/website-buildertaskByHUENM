@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import WebsiteEditor from "./websiteBuilder/WebsiteEditor";
+import WebsiteEditor from "./components/websiteBuilder/WebsiteEditor";
 
 const App = () => {
   return (

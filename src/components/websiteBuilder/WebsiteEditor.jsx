@@ -12,6 +12,8 @@ import {
 import WebsiteOverview from "./WebsiteOverview";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { v4 as uuidv4 } from "uuid";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const WebsiteEditor = () => {
   const initialSections = JSON.parse(localStorage.getItem("sections")) || [
@@ -74,6 +76,8 @@ const WebsiteEditor = () => {
     };
 
     setSections([...sections, newSection]);
+
+    toast.success(`${newSection.content} section added! at The Bottom`);
   };
 
   const sensors = useSensors(
@@ -111,11 +115,12 @@ const WebsiteEditor = () => {
 
   return (
     <div className="editorsec">
+      <ToastContainer />
       <div className="top">
         <div>
           <button onClick={handleEdit}>Edit</button>
           <button onClick={handleSave}>Save</button>
-          <button onClick={handleReset}>reset</button>
+          <button onClick={handleReset}>Reset</button>
         </div>
         <div>
           <FaDesktop
