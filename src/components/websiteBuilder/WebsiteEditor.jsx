@@ -183,6 +183,7 @@ const WebsiteEditor = () => {
                 items={sections}
                 isEditMode={isEditMode}
                 onContentChange={handleContentChange}
+                isMobileView={isMobileView}
               />
             </DndContext>
           ) : (
@@ -190,6 +191,7 @@ const WebsiteEditor = () => {
               items={sections}
               isEditMode={isEditMode}
               onContentChange={handleContentChange}
+              isMobileView={isMobileView}
             />
           )}
         </div>

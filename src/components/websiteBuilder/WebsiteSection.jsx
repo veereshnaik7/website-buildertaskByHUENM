@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./website.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Draggable from "react-draggable";
 
-const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
+const WebsiteSection = ({
+  id,
+  type,
+  content,
+  onContentChange,
+  isEditMode,
+  isMobileView,
+}) => {
   const [editableContent, setEditableContent] = useState(content);
   const [positions, setPositions] = useState(
     () =>
-      JSON.parse(localStorage.getItem(`positions_${id}`)) ||
-      content.map(() => ({ x: 0, y: 0 }))
+      JSON.parse(
+        localStorage.getItem(
+          `positions_${id}_${isMobileView ? "mobile" : "desktop"}`
+        )
+      ) || content.map(() => ({ x: 0, y: 0 }))
   );
   const [fontSize, setFontSize] = useState("16px"); // Default font size
 
@@ -73,20 +83,33 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
     const updatedPositions = [...positions];
     updatedPositions[index] = { x: data.x, y: data.y };
     setPositions(updatedPositions);
-    
-    // Calculate the new font size based on the drag distance
-    const scaleFactor = 0.01; // Adjust this value to control the font size increase
-    const newFontSize = Math.max(16, 16 + Math.abs(data.y) * scaleFactor) + "px";
+
+    const scaleFactor = 0.01;
+    const newFontSize =
+      Math.max(16, 16 + Math.abs(data.y) * scaleFactor) + "px";
     setFontSize(newFontSize);
-    
-    localStorage.setItem(`positions_${id}`, JSON.stringify(updatedPositions));
+
+    localStorage.setItem(
+      `positions_${id}_${isMobileView ? "mobile" : "desktop"}`,
+      JSON.stringify(updatedPositions)
+    );
   };
+
+  useEffect(() => {
+    setPositions(
+      JSON.parse(
+        localStorage.getItem(
+          `positions_${id}_${isMobileView ? "mobile" : "desktop"}`
+        )
+      ) || content.map(() => ({ x: 0, y: 0 }))
+    );
+  }, [isMobileView, content, id]);
 
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
-    height: getHeightByType(type),
     backgroundColor: getBackgroundColorByType(type),
+    height: getHeightByType(type),
     maxWidth: "90%",
     margin: "0 auto",
     border: isDragging ? "3px solid black" : "0px solid black",
@@ -107,9 +130,9 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
 
   const itemStyle = {
     padding: "10px",
-    cursor: isEditMode ? "move" : "default", // Adjust cursor based on edit mode
+    cursor: "move",
     display: "inline",
-    fontSize: fontSize, // Apply the dynamic font size here
+    fontSize: fontSize,
   };
 
   return (
@@ -125,40 +148,28 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
 
       {editableContent.map((item, index) => (
         <div className="item" key={index} style={{ marginBottom: "10px" }}>
-          {isEditMode ? (
-            <Draggable
-              position={positions[index]}
-              onDrag={(e, data) => handleDrag(index, e, data)}
-            >
-              <div style={itemStyle}>
-                <div
-                  contentEditable={isEditMode} 
-                  suppressContentEditableWarning={true} 
-                  onBlur={(e) => handleContentChange(index, e.target.innerText)} 
-                  style={{
-                    outline: "none",
-                    border: isEditMode ? "1px dotted #000" : "none",
-                    cursor: isEditMode ? "text" : "move",
-                    padding: isEditMode ? "5px 10px" : "none",
-                  }}
-                >
-                  {item}
-                </div>
-              </div>
-            </Draggable>
-          ) : (
+          <Draggable
+            position={positions[index]}
+            onDrag={(e, data) => handleDrag(index, e, data)}
+          >
             <div style={itemStyle}>
               <div
+                contentEditable={isEditMode}
+                suppressContentEditableWarning={true}
+                onBlur={(e) => handleContentChange(index, e.target.innerText)}
                 style={{
                   outline: "none",
-                  cursor: "default",
-                  padding: "5px 10px",
+                  border: isEditMode ? "1px dotted #000" : "none",
+                  cursor: isEditMode ? "text" : "move",
+                  padding: isEditMode ? "5px 10px" : "none",
+                  position:'relative',
+                  zIndex:123457890
                 }}
               >
                 {item}
               </div>
             </div>
-          )}
+          </Draggable>
         </div>
       ))}
     </div>
@@ -166,3 +177,4 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
 };
 
 export default WebsiteSection;
+
