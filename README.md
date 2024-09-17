@@ -1,5 +1,5 @@
 ## Website Builder App
-This is a simple website builder application created using React.js. The app allows users to create customizable web pages by adding, editing, and rearranging sections. It uses drag-and-drop functionality to reorder components and supports mobile and desktop views.
+This project is a simple website builder built with React. It allows users to dynamically add, edit, and reorder different sections of a website. The sections can be customized, reordered through drag-and-drop, and saved locally to the browser. The project supports both desktop and mobile views.
 
 ## Table of Contents
 -> Features
@@ -8,13 +8,16 @@ This is a simple website builder application created using React.js. The app all
 -> Usage
 
 ##  Features
-1. Add new components (e.g., Header, Home, Contact, Services, About, Footer)
-2. Edit content of the sections
-3 .Drag-and-drop sections to reorder them using @dnd-kit/core
-4. Save and reset functionality to persist or clear changes
-5. Switch between mobile and desktop previews
-6. LocalStorage support to save sections data
-7. Preview mode to see the live structure of the website
+1. Dynamic Section Addition: Users can add predefined sections (e.g., 
+   Header, Home, Contact, Services, etc.) to the website layout.
+2.Drag-and-Drop Functionality: Sections can be reordered using drag-and-drop functionality.
+3 .Edit Mode: Content within each section is editable, allowing users to customize the text and elements.
+4. Mobile and Desktop Views: Switch between mobile and desktop previews with easy-to-use controls.
+5. Save and Reset: Save the current state of the website to local storage, or reset the layout to its initial state.
+6.Persistent Data: Website sections and their positions are saved in local storage, making the layout persistent even after refreshing the page.
+7. WebsiteEditor: Main component that controls the addition, deletion, and editing of sections. It manages the layout and allows toggling between views (desktop or mobile).
+8. WebsiteOverview: Renders the list of sections, managing their sorting and organization.
+9. WebsiteSection: Responsible for rendering individual sections, enabling content editing and dragging functionality.
 
 ## Technologies Used
 1. React.js: A JavaScript library for building user interfaces.
@@ -22,6 +25,8 @@ This is a simple website builder application created using React.js. The app all
 3. @dnd-kit/core: For drag-and-drop functionality.
 4. @dnd-kit/sortable: For reordering items using drag-and-drop.
 5. uuid: Used to generate unique IDs for new sections.
+6. React draggable
+7. 
 
 ## Installation
 1. git clone "https://github.com/veereshnaik7/website-buildertaskByHUENM.git"
