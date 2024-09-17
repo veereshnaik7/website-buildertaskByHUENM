@@ -26,7 +26,7 @@ This project is a simple website builder built with React. It allows users to dy
 4. @dnd-kit/sortable: For reordering items using drag-and-drop.
 5. uuid: Used to generate unique IDs for new sections.
 6. React draggable
-7. 
+
 
 ## Installation
 1. git clone "https://github.com/veereshnaik7/website-buildertaskByHUENM.git"
