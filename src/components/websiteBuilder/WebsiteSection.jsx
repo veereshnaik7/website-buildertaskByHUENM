@@ -107,7 +107,7 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
 
   const itemStyle = {
     padding: "10px",
-    cursor: "move",
+    cursor: isEditMode ? "move" : "default", // Adjust cursor based on edit mode
     display: "inline",
     fontSize: fontSize, // Apply the dynamic font size here
   };
@@ -125,26 +125,40 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
 
       {editableContent.map((item, index) => (
         <div className="item" key={index} style={{ marginBottom: "10px" }}>
-          <Draggable
-            position={positions[index]}
-            onDrag={(e, data) => handleDrag(index, e, data)}
-          >
+          {isEditMode ? (
+            <Draggable
+              position={positions[index]}
+              onDrag={(e, data) => handleDrag(index, e, data)}
+            >
+              <div style={itemStyle}>
+                <div
+                  contentEditable={isEditMode} 
+                  suppressContentEditableWarning={true} 
+                  onBlur={(e) => handleContentChange(index, e.target.innerText)} 
+                  style={{
+                    outline: "none",
+                    border: isEditMode ? "1px dotted #000" : "none",
+                    cursor: isEditMode ? "text" : "move",
+                    padding: isEditMode ? "5px 10px" : "none",
+                  }}
+                >
+                  {item}
+                </div>
+              </div>
+            </Draggable>
+          ) : (
             <div style={itemStyle}>
               <div
-                contentEditable={isEditMode} 
-                suppressContentEditableWarning={true} 
-                onBlur={(e) => handleContentChange(index, e.target.innerText)} 
                 style={{
                   outline: "none",
-                  border: isEditMode ? "1px dotted #000" : "none",
-                  cursor: isEditMode ? "text" : "move",
-                  padding: isEditMode ? "5px 10px" : "none",
+                  cursor: "default",
+                  padding: "5px 10px",
                 }}
               >
                 {item}
               </div>
             </div>
-          </Draggable>
+          )}
         </div>
       ))}
     </div>
