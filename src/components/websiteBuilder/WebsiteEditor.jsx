@@ -101,12 +101,14 @@ const WebsiteEditor = () => {
   const handleEdit = () => {
     setIsEditMode(true);
     setIsLeftSectionVisible(true);
+    toast.warn("Your are onn edit Mode now");
   };
 
   const handleSave = () => {
     setIsEditMode(false);
     setIsLeftSectionVisible(false);
     localStorage.setItem("sections", JSON.stringify(sections));
+    toast.success("Website saved successfully!");
   };
 
   const handleReset = () => {
@@ -114,6 +116,7 @@ const WebsiteEditor = () => {
     setSections(initialSections);
     localStorage.clear();
     window.location.reload();
+    toast.success("Website reset successfully!");
   };
 
   const handleContentChange = (id, newContent) => {

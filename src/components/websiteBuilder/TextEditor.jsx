@@ -24,7 +24,7 @@ const TextEditor = () => {
   );
 };
 
-// Configure toolbar and formats for text formatting (like MS Word)
+
 TextEditor.modules = {
   toolbar: [
     [{ font: [] }, { size: [] }],

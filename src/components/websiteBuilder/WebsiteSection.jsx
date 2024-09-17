@@ -130,46 +130,54 @@ const WebsiteSection = ({
 
   const itemStyle = {
     padding: "10px",
-    cursor: "move",
+    cursor: isEditMode ? "move" : "default", // Change cursor based on isEditMode
     display: "inline",
     fontSize: fontSize,
   };
 
   return (
     <div ref={setNodeRef} style={style}>
-      <div
-        className="drag-handle"
-        {...attributes}
-        {...listeners}
-        style={handleStyle}
-      >
-        {isEditMode ? "☰" : ""}
-      </div>
+      {isEditMode && (
+        <div
+          className="drag-handle"
+          {...attributes}
+          {...listeners}
+          style={handleStyle}
+        >
+          ☰
+        </div>
+      )}
 
       {editableContent.map((item, index) => (
         <div className="item" key={index} style={{ marginBottom: "10px" }}>
-          <Draggable
-            position={positions[index]}
-            onDrag={(e, data) => handleDrag(index, e, data)}
-          >
-            <div style={itemStyle}>
-              <div
-                contentEditable={isEditMode}
-                suppressContentEditableWarning={true}
-                onBlur={(e) => handleContentChange(index, e.target.innerText)}
-                style={{
-                  outline: "none",
-                  border: isEditMode ? "1px dotted #000" : "none",
-                  cursor: isEditMode ? "text" : "move",
-                  padding: isEditMode ? "5px 10px" : "none",
-                  position:'relative',
-                  zIndex:123457890
-                }}
-              >
-                {item}
+          {isEditMode ? (
+            <Draggable
+              position={positions[index]}
+              onDrag={(e, data) => handleDrag(index, e, data)}
+            >
+              <div style={itemStyle}>
+                <div
+                  contentEditable={isEditMode}
+                  suppressContentEditableWarning={true}
+                  onBlur={(e) => handleContentChange(index, e.target.innerText)}
+                  style={{
+                    outline: "none",
+                    border: isEditMode ? "1px dotted #000" : "none",
+                    cursor: isEditMode ? "text" : "default",
+                    padding: isEditMode ? "5px 10px" : "none",
+                    position: "relative",
+                    zIndex: 123457890,
+                  }}
+                >
+                  {item}
+                </div>
               </div>
+            </Draggable>
+          ) : (
+            <div style={itemStyle}>
+              {item}
             </div>
-          </Draggable>
+          )}
         </div>
       ))}
     </div>
@@ -177,4 +185,3 @@ const WebsiteSection = ({
 };
 
 export default WebsiteSection;
-
