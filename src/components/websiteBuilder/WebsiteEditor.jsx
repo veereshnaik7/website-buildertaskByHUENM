@@ -20,32 +20,42 @@ const WebsiteEditor = () => {
     {
       id: "1",
       type: "header",
-      content: "Header",
+      content: ["Title", "Home", "About", "Contact", "Services"],
     },
     {
       id: "2",
       type: "home",
-      content: "Home",
+      content: ["Welcome Message", "Intro Text", "Main Image", "CTA Button"],
     },
     {
       id: "3",
       type: "contact",
-      content: "Contact",
+      content: [
+        "Contact Form",
+        "Phone Number",
+        "Email Address",
+        "Map Location",
+      ],
     },
     {
       id: "4",
       type: "services",
-      content: "Services",
+      content: ["Service 1", "Service 2", "Service 3", "Service 4"],
     },
     {
       id: "5",
       type: "about",
-      content: "About",
+      content: ["About Us Text", "Team Info", "Our Mission", "Our Vision"],
     },
     {
       id: "6",
       type: "footer",
-      content: "Footer",
+      content: [
+        "Copyright Info",
+        "Privacy Policy",
+        "Terms of Service",
+        "Social Links",
+      ],
     },
   ];
 
@@ -102,6 +112,7 @@ const WebsiteEditor = () => {
   const handleReset = () => {
     localStorage.removeItem("sections");
     setSections(initialSections);
+    localStorage.clear();
     window.location.reload();
   };
 

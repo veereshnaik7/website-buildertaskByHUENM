@@ -1,41 +1,44 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
-const initialState = JSON.parse(localStorage.getItem('sections')) || [
-  { id: "1", type: "header", content: "Header" },
-  { id: "2", type: "home", content: "Home" },
-  { id: "3", type: "contact", content: "Contact" },
-  { id: "4", type: "services", content: "Services" },
-  { id: "5", type: "about", content: "About" },
-  { id: "6", type: "footer", content: "Footer" },
+const initialSections = [
+  {
+    id: "1",
+    type: "header",
+    content: { title: "Header", items: [] },
+  },
+  {
+    id: "2",
+    type: "home",
+    content: { title: "Home", items: [] },
+  },
+  // Other sections
 ];
 
 const sectionsSlice = createSlice({
   name: 'sections',
-  initialState,
+  initialState: initialSections,
   reducers: {
     addSection: (state, action) => {
-      state.push(action.payload);
-      localStorage.setItem('sections', JSON.stringify(state));
-    },
-    removeSection: (state, action) => {
-      const updatedSections = state.filter(section => section.id !== action.payload);
-      localStorage.setItem('sections', JSON.stringify(updatedSections));
-      return updatedSections;
+      state.push({ ...action.payload, id: uuidv4() });
     },
     updateSection: (state, action) => {
-      const { id, content } = action.payload;
-      const section = state.find(section => section.id === id);
-      if (section) {
-        section.content = content;
-        localStorage.setItem('sections', JSON.stringify(state));
+      const { id, newContent } = action.payload;
+      const index = state.findIndex(section => section.id === id);
+      if (index !== -1) {
+        state[index] = { ...state[index], content: newContent };
       }
     },
-    setSections: (state, action) => {
-      localStorage.setItem('sections', JSON.stringify(action.payload));
-      return action.payload;
+    moveSection: (state, action) => {
+      const { oldIndex, newIndex } = action.payload;
+      const [removed] = state.splice(oldIndex, 1);
+      state.splice(newIndex, 0, removed);
+    },
+    resetSections: (state) => {
+      return initialSections;
     }
-  },
+  }
 });
 
-export const { addSection, removeSection, updateSection, setSections } = sectionsSlice.actions;
+export const { addSection, updateSection, moveSection, resetSections } = sectionsSlice.actions;
 export default sectionsSlice.reducer;

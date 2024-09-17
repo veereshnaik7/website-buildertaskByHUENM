@@ -1,18 +1,25 @@
 import React, { useState } from "react";
-import "./website.css"
+import "./website.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import Draggable from "react-draggable";
 
 const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
   const [editableContent, setEditableContent] = useState(content);
+  const [positions, setPositions] = useState(
+    () =>
+      JSON.parse(localStorage.getItem(`positions_${id}`)) ||
+      content.map(() => ({ x: 0, y: 0 }))
+  );
+  const [fontSize, setFontSize] = useState("16px"); // Default font size
 
   const {
-    listeners,
     attributes,
     setNodeRef,
     transform,
     transition,
     isDragging,
+    listeners,
   } = useSortable({ id });
 
   const getHeightByType = (type) => {
@@ -53,19 +60,28 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
     }
   };
 
-  const handleClickedit = () => {
-    if (isEditMode === true) {
-      const newContent = prompt("modify contnet", editableContent);
-      if (newContent !== null) {
-        setEditableContent(newContent);
-        if (onContentChange) {
-          onContentChange(id, newContent);
-        }
-      }
-    } else {
-      alert("please enable the editor mode before going to edit");
+  const handleContentChange = (index, newContent) => {
+    const updatedContent = [...editableContent];
+    updatedContent[index] = newContent;
+    setEditableContent(updatedContent);
+    if (onContentChange) {
+      onContentChange(id, updatedContent);
     }
   };
+
+  const handleDrag = (index, e, data) => {
+    const updatedPositions = [...positions];
+    updatedPositions[index] = { x: data.x, y: data.y };
+    setPositions(updatedPositions);
+    
+    // Calculate the new font size based on the drag distance
+    const scaleFactor = 0.01; // Adjust this value to control the font size increase
+    const newFontSize = Math.max(16, 16 + Math.abs(data.y) * scaleFactor) + "px";
+    setFontSize(newFontSize);
+    
+    localStorage.setItem(`positions_${id}`, JSON.stringify(updatedPositions));
+  };
+
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
@@ -76,18 +92,61 @@ const WebsiteSection = ({ id, type, content, onContentChange, isEditMode }) => {
     border: isDragging ? "3px solid black" : "0px solid black",
     position: "relative",
     zIndex: isDragging ? 1000 : 1,
-    cursor: isDragging ? "grab" : "normal",
+    cursor: "normal",
     marginTop: isEditMode ? "1rem" : "0",
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   };
-  
+
+  const handleStyle = {
+    cursor: "grab",
+    color: "#fff",
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+  };
+
+  const itemStyle = {
+    padding: "10px",
+    cursor: "move",
+    display: "inline",
+    fontSize: fontSize, // Apply the dynamic font size here
+  };
+
   return (
-    <div {...attributes} {...listeners} ref={setNodeRef} style={style}>
-      <div className="item" onClick={handleClickedit}>
-        {editableContent}
+    <div ref={setNodeRef} style={style}>
+      <div
+        className="drag-handle"
+        {...attributes}
+        {...listeners}
+        style={handleStyle}
+      >
+        {isEditMode ? "☰" : ""}
       </div>
+
+      {editableContent.map((item, index) => (
+        <div className="item" key={index} style={{ marginBottom: "10px" }}>
+          <Draggable
+            position={positions[index]}
+            onDrag={(e, data) => handleDrag(index, e, data)}
+          >
+            <div style={itemStyle}>
+              <div
+                contentEditable={isEditMode} 
+                suppressContentEditableWarning={true} 
+                onBlur={(e) => handleContentChange(index, e.target.innerText)} 
+                style={{
+                  outline: "none",
+                  border: isEditMode ? "1px dotted #000" : "none",
+                  cursor: isEditMode ? "text" : "move",
+                  padding: isEditMode ? "5px 10px" : "none",
+                }}
+              >
+                {item}
+              </div>
+            </div>
+          </Draggable>
+        </div>
+      ))}
     </div>
   );
 };
