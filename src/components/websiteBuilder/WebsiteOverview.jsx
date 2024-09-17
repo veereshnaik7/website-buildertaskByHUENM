@@ -8,7 +8,7 @@ import WebsiteSection from "./WebsiteSection";
 const WebsiteOverview = ({ items, isEditMode, onContentChange, isMobileView }) => {
   return (
     <div>
-      <SortableContext strategy={verticalListSortingStrategy} items={items}>
+      <SortableContext strategy={verticalListSortingStrategy} items={items.map(item => item.id)}>
         {items.map((item) => (
           <WebsiteSection
             id={item.id}

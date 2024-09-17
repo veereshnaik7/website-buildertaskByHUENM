@@ -6,16 +6,13 @@ import TextEditor from "./components/websiteBuilder/TextEditor";
 
 const App = () => {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/editor" element={<WebsiteEditor />} />
-          <Route path="/textEditor" element={<TextEditor />} />
-
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/editor" element={<WebsiteEditor />} />
+        <Route path="/textEditor" element={<TextEditor />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

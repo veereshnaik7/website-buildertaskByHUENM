@@ -101,13 +101,22 @@ const WebsiteEditor = () => {
   const handleEdit = () => {
     setIsEditMode(true);
     setIsLeftSectionVisible(true);
-    toast.warn("Your are onn edit Mode now");
+    toast.warn("You are now in edit mode");
   };
 
   const handleSave = () => {
     setIsEditMode(false);
     setIsLeftSectionVisible(false);
-    localStorage.setItem("sections", JSON.stringify(sections));
+
+    // Save positions as part of the section data
+    const updatedSections = sections.map(section => ({
+      ...section,
+      positions: JSON.parse(
+        localStorage.getItem(`positions_${section.id}_${isMobileView ? "mobile" : "desktop"}`)
+      ) || section.content.map(() => ({ x: 0, y: 0 }))
+    }));
+
+    localStorage.setItem("sections", JSON.stringify(updatedSections));
     toast.success("Website saved successfully!");
   };
 

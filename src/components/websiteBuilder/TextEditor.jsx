@@ -1,68 +1,213 @@
-import React, { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import React, { useState, useEffect } from "react";
+import { FaDesktop, FaMobileAlt } from "react-icons/fa";
+import {
+  closestCorners,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import WebsiteOverview from "./WebsiteOverview";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { v4 as uuidv4 } from "uuid";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const TextEditor = () => {
-  const [content, setContent] = useState("");
+const WebsiteEditor = () => {
+  const initialSections = JSON.parse(localStorage.getItem("sections")) || [
+    {
+      id: "1",
+      type: "header",
+      content: ["Title", "Home", "About", "Contact", "Services"],
+    },
+    {
+      id: "2",
+      type: "home",
+      content: ["Welcome Message", "Intro Text", "Main Image", "CTA Button"],
+    },
+    {
+      id: "3",
+      type: "contact",
+      content: [
+        "Contact Form",
+        "Phone Number",
+        "Email Address",
+        "Map Location",
+      ],
+    },
+    {
+      id: "4",
+      type: "services",
+      content: ["Service 1", "Service 2", "Service 3", "Service 4"],
+    },
+    {
+      id: "5",
+      type: "about",
+      content: ["About Us Text", "Team Info", "Our Mission", "Our Vision"],
+    },
+    {
+      id: "6",
+      type: "footer",
+      content: [
+        "Copyright Info",
+        "Privacy Policy",
+        "Terms of Service",
+        "Social Links",
+      ],
+    },
+  ];
 
-  const handleChange = (value) => {
-    setContent(value);
+  const [sections, setSections] = useState(initialSections);
+  const [newComponent, setNewComponent] = useState("header");
+  const [isEditMode, setIsEditMode] = useState(true);
+  const [isLeftSectionVisible, setIsLeftSectionVisible] = useState(true);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    // Save the sections to localStorage whenever sections state changes
+    localStorage.setItem("sections", JSON.stringify(sections));
+  }, [sections]);
+
+  const getpos = (id) => sections.findIndex((section) => section.id === id);
+
+  const handledragend = (event) => {
+    const { active, over } = event;
+    if (active.id === over.id) return;
+
+    setSections((sections) => {
+      const originalPos = getpos(active.id);
+      const newPos = getpos(over.id);
+      const updatedSections = arrayMove(sections, originalPos, newPos);
+      // Update the state with new positions
+      return updatedSections;
+    });
+  };
+
+  const handleAddComponent = () => {
+    const newSection = {
+      id: uuidv4(),
+      type: newComponent,
+      content: newComponent.charAt(0).toUpperCase() + newComponent.slice(1),
+    };
+
+    setSections([...sections, newSection]);
+
+    toast.success(`${newSection.content} section added! at The Bottom`);
+  };
+
+  const sensors = useSensors(
+    useSensor(TouchSensor),
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleEdit = () => {
+    setIsEditMode(true);
+    setIsLeftSectionVisible(true);
+    toast.warn("You are now in edit mode");
+  };
+
+  const handleSave = () => {
+    setIsEditMode(false);
+    setIsLeftSectionVisible(false);
+    localStorage.setItem("sections", JSON.stringify(sections));
+    toast.success("Website saved successfully!");
+  };
+
+  const handleReset = () => {
+    localStorage.removeItem("sections");
+    setSections(initialSections);
+    localStorage.clear();
+    window.location.reload();
+    toast.success("Website reset successfully!");
+  };
+
+  const handleContentChange = (id, newContent) => {
+    setSections((sections) =>
+      sections.map((section) =>
+        section.id === id ? { ...section, content: newContent } : section
+      )
+    );
   };
 
   return (
-    <div style={{ color: "#fff" }}>
-      <h2>Text Editor</h2>
-      <ReactQuill
-        theme="snow"
-        value={content}
-        onChange={handleChange}
-        modules={TextEditor.modules}
-        formats={TextEditor.formats}
-        placeholder="Write something..."
-      />
+    <div className="editorsec">
+      <ToastContainer />
+      <div className="top">
+        <div>
+          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleReset}>Reset</button>
+        </div>
+        <div>
+          <FaDesktop
+            className="previewicon"
+            onClick={() => setIsMobileView(false)}
+          />
+          <FaMobileAlt
+            className="previewicon"
+            onClick={() => setIsMobileView(true)}
+          />
+        </div>
+      </div>
+
+      <div className="tools-view">
+        {isLeftSectionVisible && (
+          <div className="left">
+            <h3>Add sections</h3>
+            <select
+              value={newComponent}
+              onChange={(e) => setNewComponent(e.target.value)}
+            >
+              <option value="header">Header</option>
+              <option value="home">Home</option>
+              <option value="contact">Contact</option>
+              <option value="services">Services</option>
+              <option value="about">About</option>
+              <option value="footer">Footer</option>
+            </select>
+            <button onClick={handleAddComponent}>Add</button>
+          </div>
+        )}
+        <div
+          className="right"
+          style={{
+            width: isLeftSectionVisible ? "85%" : "100%",
+            maxWidth: isMobileView ? "600px" : "100%",
+            transition: "width 0.3s ease",
+            margin: "0 auto",
+            touchAction: isEditMode ? "none" : "auto",
+          }}
+        >
+          {isEditMode ? (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCorners}
+              onDragEnd={handledragend}
+            >
+              <WebsiteOverview
+                items={sections}
+                isEditMode={isEditMode}
+                onContentChange={handleContentChange}
+                isMobileView={isMobileView}
+              />
+            </DndContext>
+          ) : (
+            <WebsiteOverview
+              items={sections}
+              isEditMode={isEditMode}
+              onContentChange={handleContentChange}
+              isMobileView={isMobileView}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
 
-
-TextEditor.modules = {
-  toolbar: [
-    [{ font: [] }, { size: [] }],
-    [{ header: "1" }, { header: "2" }, "bold", "italic", "underline", "strike"], // headings and styles
-    [{ color: [] }, { background: [] }], // text color and background
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ], // lists and indentation
-    ["blockquote", "code-block"],
-    [{ align: [] }],
-    ["link", "image", "video"],
-    ["clean"], // remove formatting
-  ],
-};
-
-// Supported formats in the editor
-TextEditor.formats = [
-  "font",
-  "size",
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
-  "code-block",
-  "color",
-  "background",
-  "align",
-];
-
-export default TextEditor;
+export default WebsiteEditor;
