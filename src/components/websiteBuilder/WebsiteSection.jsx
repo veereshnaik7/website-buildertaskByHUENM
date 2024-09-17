@@ -3,6 +3,7 @@ import "./website.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Draggable from "react-draggable";
+import { GoGrabber } from "react-icons/go";
 
 const WebsiteSection = ({
   id,
@@ -21,7 +22,8 @@ const WebsiteSection = ({
         )
       ) || content.map(() => ({ x: 0, y: 0 }))
   );
-  const [fontSize, setFontSize] = useState("16px"); // Default font size
+
+  const [currentlyEditing, setCurrentlyEditing] = useState(null);
 
   const {
     attributes,
@@ -77,17 +79,13 @@ const WebsiteSection = ({
     if (onContentChange) {
       onContentChange(id, updatedContent);
     }
+    setCurrentlyEditing(null);
   };
 
   const handleDrag = (index, e, data) => {
     const updatedPositions = [...positions];
     updatedPositions[index] = { x: data.x, y: data.y };
     setPositions(updatedPositions);
-
-    const scaleFactor = 0.01;
-    const newFontSize =
-      Math.max(16, 16 + Math.abs(data.y) * scaleFactor) + "px";
-    setFontSize(newFontSize);
 
     localStorage.setItem(
       `positions_${id}_${isMobileView ? "mobile" : "desktop"}`,
@@ -132,7 +130,6 @@ const WebsiteSection = ({
     padding: "10px",
     cursor: isEditMode ? "move" : "default",
     display: "inline",
-   
   };
 
   return (
@@ -144,7 +141,7 @@ const WebsiteSection = ({
           {...listeners}
           style={handleStyle}
         >
-          ☰
+          <GoGrabber />
         </div>
       )}
 
@@ -153,11 +150,13 @@ const WebsiteSection = ({
           <Draggable
             position={positions[index]}
             onDrag={(e, data) => handleDrag(index, e, data)}
+            disabled={currentlyEditing !== null && currentlyEditing !== index}
           >
             <div style={itemStyle}>
               <div
                 contentEditable={isEditMode}
                 suppressContentEditableWarning={true}
+                onFocus={() => setCurrentlyEditing(index)}
                 onBlur={(e) => handleContentChange(index, e.target.innerText)}
                 style={{
                   outline: "none",

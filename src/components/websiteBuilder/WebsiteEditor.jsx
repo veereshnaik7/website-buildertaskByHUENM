@@ -77,19 +77,21 @@ const WebsiteEditor = () => {
       return arrayMove(sections, originalPos, newPos);
     });
   };
-
   const handleAddComponent = () => {
     const newSection = {
       id: uuidv4(),
       type: newComponent,
-      content: newComponent.charAt(0).toUpperCase() + newComponent.slice(1),
+      content: ["content1", "content2", "content3", "content4"], 
     };
 
     setSections([...sections, newSection]);
 
-    toast.success(`${newSection.content} section added! at The Bottom`);
+    toast.success(
+      `${
+        newComponent.charAt(0).toUpperCase() + newComponent.slice(1)
+      } section added with default content!`
+    );
   };
-
   const sensors = useSensors(
     useSensor(TouchSensor),
     useSensor(PointerSensor),
@@ -108,12 +110,15 @@ const WebsiteEditor = () => {
     setIsEditMode(false);
     setIsLeftSectionVisible(false);
 
-    // Save positions as part of the section data
-    const updatedSections = sections.map(section => ({
+
+    const updatedSections = sections.map((section) => ({
       ...section,
-      positions: JSON.parse(
-        localStorage.getItem(`positions_${section.id}_${isMobileView ? "mobile" : "desktop"}`)
-      ) || section.content.map(() => ({ x: 0, y: 0 }))
+      positions:
+        JSON.parse(
+          localStorage.getItem(
+            `positions_${section.id}_${isMobileView ? "mobile" : "desktop"}`
+          )
+        ) || section.content.map(() => ({ x: 0, y: 0 })),
     }));
 
     localStorage.setItem("sections", JSON.stringify(updatedSections));
